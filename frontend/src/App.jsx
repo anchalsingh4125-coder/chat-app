@@ -18,13 +18,16 @@ const App = () => {
   const { authUser, checkAuth, isCheckingAuth, onlineUsers } = useAuthStore();
   const { theme } = useThemeStore();
 
-  console.log({ onlineUsers });
-
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);
 
-  console.log({ authUser });
+  // Apply theme to HTML tag
+  useEffect(() => {
+    if (theme) {
+      document.querySelector("html").setAttribute("data-theme", theme);
+    }
+  }, [theme]);
 
   if (isCheckingAuth && !authUser)
     return (
@@ -34,7 +37,7 @@ const App = () => {
     );
 
   return (
-    <div data-theme={theme}>
+    <div>
       <Navbar />
 
       <Routes>
@@ -49,4 +52,5 @@ const App = () => {
     </div>
   );
 };
+
 export default App;
